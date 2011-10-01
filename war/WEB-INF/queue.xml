@@ -1,0 +1,14 @@
+<queue-entries>
+  <queue>
+    <name>sync</name>
+    <rate>30/m</rate>
+    <bucket-size>1</bucket-size>
+    <retry-parameters>
+      <task-retry-limit>10</task-retry-limit>
+      <task-age-limit>300s</task-age-limit>
+      <min-backoff-seconds>30</min-backoff-seconds>
+      <max-backoff-seconds>120</max-backoff-seconds>
+      <max-doublings>2</max-doublings>
+    </retry-parameters>
+  </queue>
+</queue-entries>

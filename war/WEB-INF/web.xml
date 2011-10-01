@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  
+  <!-- Create a fake role to block access to /config.properties -->
+  <security-constraint>
+    <web-resource-collection>
+      <url-pattern>/config.properties</url-pattern>
+      <url-pattern>/sync</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <url-pattern>/refresh</url-pattern>
+      <url-pattern>/oauth2</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>*</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <servlet>
+    <servlet-name>oauth2callback</servlet-name>
+    <servlet-class>org.plus.score.OAuth2Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>oauth2callback</servlet-name>
+    <url-pattern>/oauth2callback</url-pattern>
+    <url-pattern>/oauth2</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>sync</servlet-name>
+    <servlet-class>org.plus.score.PlusSyncer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>sync</servlet-name>
+    <url-pattern>/sync</url-pattern>
+    <url-pattern>/refresh</url-pattern>
+  </servlet-mapping>
+
+ <welcome-file-list>
+   <welcome-file>index.jsp</welcome-file>
+ </welcome-file-list>
+</web-app>
