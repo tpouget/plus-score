@@ -32,9 +32,10 @@ public class PlusSyncer extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String userId = UserServiceFactory.getUserService().getCurrentUser().getUserId();
+		String userNickName = UserServiceFactory.getUserService().getCurrentUser().getNickname();
+		String channelKey = userNickName+new Date().getTime();
 		ChannelService channelService = ChannelServiceFactory.getChannelService();
-		String token = channelService.createChannel(userId);
+		String token = channelService.createChannel(channelKey);
 		
 		QueueFactory.getQueue(QUEUE)
 				    .add(TaskOptions.Builder
@@ -43,7 +44,7 @@ public class PlusSyncer extends HttpServlet{
 			            	    		   UserServiceFactory.getUserService()
 				            	    						 .getCurrentUser()
 				            	    						 .getEmail())
-				            	    .param("userId", userId));
+				            	    .param("channelKey", channelKey));
 		resp.setContentType("application/json");
 		resp.getWriter().write("{\"token\":\""+token+"\"}");
 	}
@@ -52,14 +53,15 @@ public class PlusSyncer extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String userEmail = req.getParameter("userEmail");
-		String userId = req.getParameter("userId");
+		String channelKey = req.getParameter("channelKey");
 		String nextLink = req.getParameter("nextLink");
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		User user = null;
 		try{
 			user = pm.getObjectById(User.class, userEmail);
-			if (nextLink==null) user.resetScore();
+			if (nextLink==null) 
+				user.resetScore();
 			
 			GoogleAccessProtectedResource requestInitializer =
 		        new GoogleAccessProtectedResource(
@@ -86,6 +88,7 @@ public class PlusSyncer extends HttpServlet{
 			if (nextLink!=null) listActivities.setPageToken(nextLink);
 			ActivityFeed activityFeed = listActivities.execute();
 			List<Activity> activities = activityFeed.getItems();
+			
 			
 			if (activities!=null){
 				if (logger.isLoggable(Level.INFO)){
@@ -115,23 +118,27 @@ public class PlusSyncer extends HttpServlet{
 							   +"Score:"+user.getScore()+"\n");
 				}
 			}
+			
 			user = pm.makePersistent(user);
 			
-			String msg = "{\"score\":\""+user.getScore()+"\"";
+			String msg = "{\"score\":"+user.getScore()+", "
+			           + "\"replies\":"+user.getReplies()+", "
+			           + "\"reshares\":"+user.getReshares()+", "
+			           + "\"ones\":"+user.getPlusOne();
 			if (activityFeed.getNextPageToken() != null){
 				QueueFactory.getQueue(QUEUE)
 						    .add(TaskOptions.Builder
 						            	    .withUrl("/sync")
 						            	    .param("userEmail", userEmail)
-						            	    .param("userId", userId)
+						            	    .param("channelKey", channelKey)
 						            	    .param("nextLink", activityFeed.getNextPageToken()));
 			}else{
-				msg+=", \"over\":\"true\"";
+				msg+=", \"over\":true";
 			}
 			msg+="}";
-			if (userId!=null)
+			if (channelKey!=null)
 				ChannelServiceFactory.getChannelService()
-				 					 .sendMessage(new ChannelMessage(userId, msg));
+				 					 .sendMessage(new ChannelMessage(channelKey, msg));
 		}catch(Exception e){
 			logger.log(Level.SEVERE, e.getMessage(), e);
 			resp.sendError(500, e.getMessage());

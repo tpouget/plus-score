@@ -48,7 +48,7 @@
       }
     </style>
     <script type="text/javascript" src="jquery-1.6.4.min.js"></script>
-    <script type="text/javascript" src="https://talkgadget.google.com/talkgadget/channel.js"></script>
+    <script type="text/javascript" src="/_ah/channel/jsapi"></script>
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
     <script type="text/javascript">
 		$(document).ready(function(){
@@ -62,10 +62,20 @@
 		    	console.log("yeah, channel opened!");
 		    };
 		    onMessage = function(msg){
-	    		$("#score").html(msg.score);
-	    		if(msg.over) this.close();
+		    	var data = $.parseJSON(msg.data);
+	    		$("#score").html(data.score);
+	    		$("#replies").html(data.replies);
+	    		$("#reshares").html(data.reshares);
+	    		$("#ones").html(data.ones);
+	    		if(data.over) {
+	    			toggleLoader();
+	    		}
 	    	};
 	    	$("#refreshButton").click(function(){
+	    		$("#score").html(0);
+	    		$("#replies").html(0);
+	    		$("#reshares").html(0);
+	    		$("#ones").html(0);
 	    		toggleLoader();
 	    		$.ajax({ 
 	    			url: "refresh",
@@ -74,8 +84,14 @@
 	    				var handler = {
    				          'onopen': onOpened,
    				          'onmessage': onMessage,
-   				          'onerror': function() {},
-   				          'onclose': toggleLoader
+   				          'onerror': function(e) {
+   				        	  console.log("Channel error: "+e.code+", "+e.description)
+   				        	  this.close();
+   				          },
+   				          'onclose': function() {
+   				        	  console.log("Channel closed")
+   				        	  toggleLoader();
+				          }
    				        };
    				        var socket = channel.open(handler);
 	    			}
@@ -95,9 +111,9 @@
 	            <td style="line-height: 10px; width: 96px; padding: 0px;"><img src="<%= user.getAvatarUrl() %>" height="128px"/></td>
 	            <td style="padding: 0px; font-size: 24px;vertical-align: middle; text-align: center;"><%= user.getDisplayName() %></td>
 	            <td style="padding: 0px; font-size: 16px;vertical-align: middle; text-align: center;">
-	            	<b><%= user.getReplies() %></b> replies, <br/>
-	            	<b><%= user.getPlusOne() %></b> +1s <br/>
-	            	<b><%= user.getReshares() %></b> reshares
+	            	<span id="replies" style="font-weight: bold"><%= user.getReplies() %></span> replies, <br/>
+	            	<span id="ones" style="font-weight: bold"><%= user.getPlusOne() %></span> +1s <br/>
+	            	<span id="reshares" style="font-weight: bold"><%= user.getReshares() %></span> reshares
 	            </td>
 	            <td style="padding: 0px; font-size: 16px;vertical-align: middle; text-align: center;">
 	            	<p>Score<br/>
