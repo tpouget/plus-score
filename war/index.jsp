@@ -154,7 +154,7 @@
           		<tr>
 	                <td style="width: 96px; padding: 0px; font-size: 56px;vertical-align: middle; text-align: center;"><%= rank+1 %></td>
 	                <td style="line-height: 10px; width: 96px; padding: 0px;">
-	                	<img src="<%= u.getAvatarUrl()+"?size=128" %>" height="128px"/>
+	                	<img src="<%= u.getAvatarUrl()+(u.getAvatarUrl().endsWith("NoPictureDark65.jpg")?"":"?size=128") %>" height="128px"/>
 	               	</td>
 	                <td style="padding: 0px; font-size: 24px;vertical-align: middle; text-align: center;">
 	                	<a href="<%= u.getProfileUrl()!=null?u.getProfileUrl():"#" %>" ><%= u.getDisplayName() %></a>
