@@ -105,31 +105,42 @@
     <div class="container">
       <div class="hero-unit" style="padding: 15px 60px 40px;">
         <h1 style="text-align: center;margin-bottom:18px">Google+ Score</h1>
-      	<% if (user.getOauthToken() != null){ %>
-      		<table class="zebra-striped">
-	          <tr>
-	            <td style="line-height: 10px; width: 96px; padding: 0px;"><img src="<%= user.getAvatarUrl() %>" height="128px"/></td>
-	            <td style="padding: 0px; font-size: 24px;vertical-align: middle; text-align: center;"><%= user.getDisplayName() %></td>
-	            <td style="padding: 0px; font-size: 16px;vertical-align: middle; text-align: center;">
-	            	<span id="replies" style="font-weight: bold"><%= user.getReplies() %></span> replies, <br/>
-	            	<span id="ones" style="font-weight: bold"><%= user.getPlusOne() %></span> +1s <br/>
-	            	<span id="reshares" style="font-weight: bold"><%= user.getReshares() %></span> reshares
-	            </td>
-	            <td style="padding: 0px; font-size: 16px;vertical-align: middle; text-align: center;">
-	            	<p>Score<br/>
-	            	<span id="score" style="font-weight: bold;"><%= user.getScore() %></span>
-	            	</p>
-	            	<p id="refresh"><span id="refreshButton" class="btn primary">refresh</span></p>
-	            	<p id="loader" style="display: none;">
-	            		Wait for it...
-					</p>
-	            </td>
-	          </tr>
-	        </table>
-      	<% }else{ %>
-        	<p>We're going to read your public feed. Analyze all of it, and made some heavy computing to know if you are a winner or a loser.</p>
-        	<p><a class="btn primary large" href="oauth2">Connect to Google+</a></p>
-      	<% } %>
+        <% if (user.getUsername().endsWith("@gmail.com")){ %>
+	      	<% if (user.getOauthToken() != null){ %>
+	      		<table class="zebra-striped">
+		          <tr>
+		            <td style="line-height: 10px; width: 96px; padding: 0px;"><img src="<%= user.getAvatarUrl() %>" height="128px"/></td>
+		            <td style="padding: 0px; font-size: 24px;vertical-align: middle; text-align: center;"><%= user.getDisplayName() %></td>
+		            <td style="padding: 0px; font-size: 16px;vertical-align: middle; text-align: center;">
+		            	<span id="replies" style="font-weight: bold"><%= user.getReplies() %></span> replies, <br/>
+		            	<span id="ones" style="font-weight: bold"><%= user.getPlusOne() %></span> +1s <br/>
+		            	<span id="reshares" style="font-weight: bold"><%= user.getReshares() %></span> reshares
+		            </td>
+		            <td style="padding: 0px; font-size: 16px;vertical-align: middle; text-align: center;">
+		            	<p>Score<br/>
+		            	<span id="score" style="font-weight: bold;"><%= user.getScore() %></span>
+		            	</p>
+		            	<p id="refresh"><span id="refreshButton" class="btn primary">refresh</span></p>
+		            	<p id="loader" style="display: none;">
+		            		Wait for it...
+						</p>
+		            </td>
+		          </tr>
+		        </table>
+	      	<% }else{ %>
+	        	<p>We're going to read your public feed. Analyze all of it, and made some heavy computing to know if you are a winner or a loser.</p>
+	        	<p><a class="btn primary large" href="oauth2">Connect to Google+</a></p>
+	      	<% } 
+        } else { %>
+        	<div>
+        		You are connected with your <b><%= user.getUsername() %></b> e-mail account.<br/>
+        		This application only works with public GMail addresses since Google + isn't available for Google Apps yet.<br/> 
+        		Please logout from this account and try and reconnect with your public address.
+        	</div>
+        	<p><a class="btn primary large" href="<%= userService.createLogoutURL("/") %>">Logout</a></p>
+     <% } %>
+      	
+      	
       </div>
       <div style="text-align: center;"><g:plusone/></div>
       <br/>
