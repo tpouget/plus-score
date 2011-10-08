@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
   <application>plus-score</application>
-  <version>103</version>
+  <version>106</version>
  
   <!-- Configure java.util.logging -->
   <system-properties>
@@ -12,4 +12,16 @@
   <sessions-enabled>true</sessions-enabled>
   
   <threadsafe>true</threadsafe>
+  
+  <static-files>
+	<include path="/**.css" expiration="365d" />
+	<include path="/**.js" expiration="365d" />
+	<include path="/**.ico" expiration="365d" />
+	<include path="/**.txt" expiration="365d" />
+	<include path="/**.html" expiration="365d" />
+  </static-files>
+  
+  <resource-files>
+	<include path="/**.properties" />
+  </resource-files>
 </appengine-web-app>

@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-client-1.5.0-beta.jar" sourcepath="war/WEB-INF/lib/google-api-client-1.5.0-beta-sources.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-client-extensions-1.5.0-beta.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-services-plus-v1-1.2.2-beta.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-http-client-1.5.0-beta.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-http-client-extensions-1.5.0-beta.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-oauth-client-1.5.0-beta.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-oauth-client-extensions-1.5.0-beta.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-lang3-3.0.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-client-1.5.0-beta-sources.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-client-extensions-1.5.0-beta-sources.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-http-client-extensions-1.5.0-beta-sources.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-oauth-client-1.5.0-beta-sources.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-oauth-client-extensions-1.5.0-beta-sources.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-services-plus-v1-1.2.2-beta-sources.jar"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
-	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+	<classpathentry kind="src" output="target/war/WEB-INF/classes" path="src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="target/war/WEB-INF/classes" path="src/main/resources"/>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="output" path="target/war/WEB-INF/classes"/>
 </classpath>

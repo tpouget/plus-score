@@ -1,29 +1,27 @@
 package org.plus.score;
 
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import javax.persistence.Id;
 
-@PersistenceCapable(detachable="true")
 public class User {
-	@PrimaryKey
-	private String username;
-	@Persistent private String oauthToken;
-	@Persistent private String refreshToken; 
-	@Persistent private Long tokenExpirationTime = 0L;
-	@Persistent private Long tokenRetrievalTime = 0L;
+	@Id private String username;
+	private String oauthToken;
+	private String refreshToken; 
+	private Long tokenExpirationTime = 0L;
+	private Long tokenRetrievalTime = 0L;
 	
-	@Persistent private String displayName;
+	private String displayName;
 	
-	@Persistent private String avatarUrl;
+	private String avatarUrl;
 	
-	@Persistent private int reshares = 0;
-	@Persistent private int plusOne = 0;
-	@Persistent private int replies = 0; 
-	@Persistent private int score = 0;
+	private int reshares = 0;
+	private int plusOne = 0;
+	private int replies = 0; 
+	private int score = 0;
 	
-	@Persistent private String id;
-	@Persistent private String profileUrl;
+	private String id;
+	private String profileUrl;
+	
+	public User() {}
 	
 	public User(String userEmail) {
 		this.username = userEmail;

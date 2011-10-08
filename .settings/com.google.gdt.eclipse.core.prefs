@@ -1,4 +1,6 @@
-#Thu Sep 29 20:49:31 CEST 2011
+#Sat Oct 08 02:07:47 CEST 2011
 eclipse.preferences.version=1
-warSrcDir=war
-warSrcDirIsOutput=true
+jarsExcludedFromWebInfLib=
+lastWarOutDir=/Users/thibaultpouget/workspace/plus-score/target/war
+warSrcDir=
+warSrcDirIsOutput=false
