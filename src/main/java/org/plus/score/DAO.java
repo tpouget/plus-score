@@ -42,7 +42,7 @@ public class DAO extends DAOBase{
 	public List<User> getRankedUsers(){
 		Objectify ofy = ObjectifyService.begin();
 		Query<User> q = ofy.query(User.class)
-				     	   .order("score desc");
+				     	   .order("-score");
 		ArrayList<User> rankedUsers = new ArrayList<User>();
 		for (User user:q){
 			if (user.getId()!=null) rankedUsers.add(user);

@@ -2,6 +2,10 @@ package org.plus.score;
 
 import javax.persistence.Id;
 
+import com.googlecode.objectify.annotation.Indexed;
+import com.googlecode.objectify.annotation.Unindexed;
+
+@Unindexed
 public class User {
 	@Id private String username;
 	private String oauthToken;
@@ -16,7 +20,7 @@ public class User {
 	private int reshares = 0;
 	private int plusOne = 0;
 	private int replies = 0; 
-	private int score = 0;
+	@Indexed private int score = 0;
 	
 	private String id;
 	private String profileUrl;

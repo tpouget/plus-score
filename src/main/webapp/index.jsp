@@ -3,15 +3,12 @@
 <%@ page import="com.google.appengine.api.users.UserService"%> 
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
 
-<%@ page import="com.google.api.client.googleapis.auth.oauth2.draft10.GoogleAccessProtectedResource" %>
 <%@ page import="com.google.api.services.plus.Plus" %>
 <%@ page import="com.google.api.client.http.HttpResponseException" %>
 <%@ page import="com.google.api.services.plus.model.*" %>
 
 <%@ page import="org.plus.score.DAO"%>
 <%@ page import="org.plus.score.User"%>
-<%@ page import="org.plus.score.Util" %>
-<%@ page import="org.plus.score.ConfigHelper" %>
 
 <%@ page import="java.util.logging.Logger" %>
 <% final Logger log = Logger.getLogger("/index.jsp"); %>
@@ -112,7 +109,7 @@
            if (userService.isUserLoggedIn()){
         	   user = dao.getOrCreateUser();
            }
-           if (user != null && user.getOauthToken() != null){
+           if (user != null && user.getDisplayName() != null){
         	   if (user.getUsername().endsWith("@gmail.com")){ %>
    	      		<table class="zebra-striped">
    		          <tr>
